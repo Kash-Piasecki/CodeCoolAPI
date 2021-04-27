@@ -43,6 +43,7 @@ namespace CodeCoolAPI
             
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddHttpContextAccessor();
             
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthorService, AuthorService>();
