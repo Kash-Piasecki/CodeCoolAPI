@@ -47,6 +47,7 @@ namespace CodeCoolAPI
             
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IMaterialTypeService, MaterialTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
