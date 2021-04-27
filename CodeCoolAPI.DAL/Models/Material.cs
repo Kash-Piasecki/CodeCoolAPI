@@ -11,6 +11,7 @@ namespace CodeCoolAPI.DAL.Models
         public string Location { get; set; }
         public DateTime PublishTime { get; set; }
         public MaterialType MaterialType { get; set; }
+        public int MaterialTypeId { get; set; }
         public IEnumerable<Review> Reviews { get; set; }
     }
 }
