@@ -2,7 +2,7 @@
 
 namespace CodeCoolAPI.DAL.Models
 {
-    public class Author
+    public class Author : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }

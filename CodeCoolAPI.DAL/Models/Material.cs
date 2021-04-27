@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CodeCoolAPI.DAL.Models
 {
-    public class Material
+    public class Material : BaseEntity
     {
         public Author Author { get; set; }
         public int AuthorId { get; set; }
