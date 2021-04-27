@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCoolAPI", "CodeCoolAPI\CodeCoolAPI.csproj", "{3C534B08-C9BC-42FA-A1A9-4F7F746B95C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCoolAPI.DAL", "CodeCoolAPI.DAL\CodeCoolAPI.DAL.csproj", "{BC8301F4-1472-4397-BC33-7F60B41E567D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C534B08-C9BC-42FA-A1A9-4F7F746B95C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C534B08-C9BC-42FA-A1A9-4F7F746B95C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C534B08-C9BC-42FA-A1A9-4F7F746B95C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C534B08-C9BC-42FA-A1A9-4F7F746B95C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC8301F4-1472-4397-BC33-7F60B41E567D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC8301F4-1472-4397-BC33-7F60B41E567D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC8301F4-1472-4397-BC33-7F60B41E567D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC8301F4-1472-4397-BC33-7F60B41E567D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
