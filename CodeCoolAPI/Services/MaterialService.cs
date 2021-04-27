@@ -23,8 +23,8 @@ namespace CodeCoolAPI.Services
         public async Task<MaterialReadDto> ReadMaterialById(int id)
         {
             var material = await FindMaterial(id);
-            var matetialReadDto = _mapper.Map<MaterialReadDto>(material);
-            return matetialReadDto;
+            var materialReadDto = _mapper.Map<MaterialReadDto>(material);
+            return materialReadDto;
         }
 
         public async Task<IEnumerable<MaterialReadDto>> ReadAllMaterials()

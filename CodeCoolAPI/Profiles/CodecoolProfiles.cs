@@ -21,6 +21,10 @@ namespace CodeCoolAPI.Profiles
                 .ForMember(x => x.MaterialTypeName, y => y.MapFrom(m => m.MaterialType.Name));
             CreateMap<MaterialUpsertDto, Material>();
             CreateMap<Material, MaterialUpsertDto>();
+            
+            CreateMap<Review, ReviewReadDto>();
+            CreateMap<ReviewUpsertDto, Review>();
+            CreateMap<Review, ReviewUpsertDto>();
         }
     }
 }
