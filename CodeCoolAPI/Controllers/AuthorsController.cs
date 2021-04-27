@@ -23,6 +23,7 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<AuthorReadDto>>> Get()
         {
             var actorReadDtos = await _authorService.ReadAllAuthors();
@@ -31,6 +32,7 @@ namespace CodeCoolAPI.Controllers
         }
         
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 300, VaryByQueryKeys = new []{"id"})]
         public async Task<ActionResult<AuthorReadDto>> Get(int id)
         {
             var readAuthorById = await _authorService.ReadAuthorById(id);
