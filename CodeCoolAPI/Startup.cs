@@ -31,8 +31,8 @@ namespace CodeCoolAPI
             services.AddControllers();
             services.AddDbContext<CodecoolContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("TvSeriesConnectionString"),
-                    optionsBuilder => optionsBuilder.MigrationsAssembly("CodeCoolConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("CodeCoolConnection"),
+                    optionsBuilder => optionsBuilder.MigrationsAssembly("CodeCoolAPI"));
             });
             services.AddSwaggerGen(c =>
             {
