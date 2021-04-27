@@ -22,9 +22,9 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MaterialReadDto>>> Get()
+        public async Task<ActionResult<IEnumerable<MaterialReadDto>>> Get(string searchByTypeName, SortDirection sortByDateDirection)
         {
-            var materialReadDtoList = await _materialService.ReadAllMaterials();
+            var materialReadDtoList = await _materialService.ReadAllMaterials(searchByTypeName, sortByDateDirection);
             _logger.LogInformation(LogMessages.EntitiesFound);
             return Ok(materialReadDtoList);
         }

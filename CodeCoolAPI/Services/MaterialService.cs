@@ -6,6 +6,7 @@ using CodeCoolAPI.CustomExceptions;
 using CodeCoolAPI.DAL.Models;
 using CodeCoolAPI.DAL.UnitOfWork;
 using CodeCoolAPI.Dtos;
+using CodeCoolAPI.Helpers;
 
 namespace CodeCoolAPI.Services
 {
@@ -27,15 +28,25 @@ namespace CodeCoolAPI.Services
             return materialReadDto;
         }
 
-        public async Task<IEnumerable<MaterialReadDto>> ReadAllMaterials()
+        public async Task<IEnumerable<MaterialReadDto>> ReadAllMaterials(string searchByTypeName, SortDirection sortByDateDirection)
         {
-            var materialList = await _unitOfWork.Materials.FindAll();
+            var materialList = await GetMaterialList(searchByTypeName);
             if (!materialList.Any())
                 throw new NotFoundException("Material list is empty");
 
             var materialDtoList = _mapper.Map<IEnumerable<MaterialReadDto>>(materialList);
+            SortByDate(ref materialDtoList, sortByDateDirection);
             return materialDtoList;
         }
+
+        private void SortByDate(ref IEnumerable<MaterialReadDto> materialDtoList, SortDirection sortByDateDirection)
+        {
+            if (sortByDateDirection is SortDirection.ASC)
+                materialDtoList = materialDtoList.OrderBy(x => x.PublishTime);
+            if (sortByDateDirection is SortDirection.DESC)
+                materialDtoList = materialDtoList.OrderByDescending(x => x.PublishTime);
+        }
+
 
         public async Task<MaterialReadDto> CreateMaterialReadDto(MaterialUpsertDto materialUpsertDto)
         {
@@ -66,6 +77,15 @@ namespace CodeCoolAPI.Services
             if (material is null)
                 throw new NotFoundException("Material not found");
             return material;
+        }
+        private async Task<IEnumerable<Material>> GetMaterialList(string searchByTypeName)
+        {
+            IEnumerable<Material> materialList;
+            if (!string.IsNullOrWhiteSpace(searchByTypeName))
+                materialList = await _unitOfWork.Materials.FindAllByQuery(searchByTypeName);
+            else
+                materialList = await _unitOfWork.Materials.FindAll();
+            return materialList;
         }
     }
 }

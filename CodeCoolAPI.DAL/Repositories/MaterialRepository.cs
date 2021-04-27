@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CodeCoolAPI.DAL.Context;
 using CodeCoolAPI.DAL.Models;
@@ -17,7 +18,13 @@ namespace CodeCoolAPI.DAL.Repositories
             return await _db.Materials.Include(x => x.Author).Include(x => x.MaterialType)
                 .FirstOrDefaultAsync(z => z.Id == id);
         }
-        
+
+        public async Task<IEnumerable<Material>> FindAllByQuery(string searchByTypeName)
+        {
+            return await _db.Materials.Include(x => x.Author).Include(x => x.MaterialType).Where(x => x.MaterialType.Name.Contains(searchByTypeName))
+                .ToListAsync();
+        }
+
         public override async Task<IEnumerable<Material>> FindAll()
         {
             return await _db.Materials.Include(x => x.Author).Include(x => x.MaterialType)
