@@ -53,6 +53,11 @@ namespace CodeCoolAPI.Services
             await _unitOfWork.Save();
         }
 
+        public async Task<AuthorUpsertDto> PatchAuthor(Author author)
+        {
+            return await Task.Run(() => _mapper.Map<AuthorUpsertDto>(author));
+        }
+
         public async Task DeleteAuthor(int id)
         {
             var author = await FindAuthor(id);
@@ -60,7 +65,14 @@ namespace CodeCoolAPI.Services
             await _unitOfWork.Save();
         }
 
-        private async Task<Author> FindAuthor(int id)
+        public async Task MapPatch(Author author, AuthorUpsertDto dto)
+        {
+            _mapper.Map(dto, author);
+            await _unitOfWork.Authors.Update(author);
+            await _unitOfWork.Save();
+        }
+
+        public async Task<Author> FindAuthor(int id)
         {
             var author = await _unitOfWork.Authors.Find(id);
             if (author is null)

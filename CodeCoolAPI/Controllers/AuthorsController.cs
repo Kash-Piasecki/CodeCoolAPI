@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
 using CodeCoolAPI.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeCoolAPI.Controllers
@@ -43,6 +44,18 @@ namespace CodeCoolAPI.Controllers
         {
             await _authorService.UpdateAuthor(id, authorUpsertDto);
             return Ok();
+        }
+        
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(int id, JsonPatchDocument<AuthorUpsertDto> patchDocument)
+        {
+            var author = await _authorService.FindAuthor(id);
+            var authorToPatch = await _authorService.PatchAuthor(author);
+            patchDocument.ApplyTo(authorToPatch, ModelState);
+            if (!TryValidateModel(authorToPatch))
+                return ValidationProblem(ModelState);
+            await _authorService.MapPatch(author, authorToPatch);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
