@@ -8,12 +8,12 @@ namespace CodeCoolAPI.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
-        // private readonly ILogger _logger;
-        //
-        // public ErrorHandlingMiddleware(ILogger logger)
-        // {
-        //     _logger = logger;
-        // }
+        private readonly ILogger _logger;
+        
+        public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
+        {
+            _logger = logger;
+        }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -24,19 +24,19 @@ namespace CodeCoolAPI.Middleware
             catch (BadRequestException badRequest)
             {
                 context.Response.StatusCode = 404;
-                // _logger.LogWarning("Bad Request Exception");
+                _logger.LogWarning("Bad Request Exception");
                 await context.Response.WriteAsync(badRequest.Message);
             }
             catch (NotFoundException notFoundException)
             {
                 context.Response.StatusCode = 404;
-                // _logger.LogWarning("Entity not found exception");
+                _logger.LogWarning("Entity not found exception");
                 await context.Response.WriteAsync(notFoundException.Message);
             }
             catch (Exception e)
             {
                 context.Response.StatusCode = 500;
-                // _logger.LogError("Internal Server Error");
+                _logger.LogError("Internal Server Error");
                 await context.Response.WriteAsync("Internal Server Error");
             }
         }
