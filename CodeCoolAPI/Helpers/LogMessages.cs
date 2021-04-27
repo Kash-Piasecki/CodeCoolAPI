@@ -9,6 +9,6 @@
         public const string EntityDeleted = "Entity Removed, Code 204 No Content";
         public const string EntityNotFound = "Entity Not Found Exception. Error Code 404 NotFound";
         public const string BadRequest = "Bad Request Exception. Error Code 404 BadRequest";
-        public const string InternalServerError = "Internal Server Exception. Error Code 500 InternalSeverError";
+        public const string InternalServerError = "Internal Server Exception. Error Code 500 InternalServerError";
     }
 }

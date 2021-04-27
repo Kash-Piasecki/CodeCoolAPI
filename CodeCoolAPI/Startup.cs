@@ -30,7 +30,6 @@ namespace CodeCoolAPI
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-            // services.AddHttpContextAccessor();
             services.AddDbContext<CodecoolContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("CodeCoolConnection"),

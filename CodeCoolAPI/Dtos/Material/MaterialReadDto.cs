@@ -12,6 +12,5 @@ namespace CodeCoolAPI.Dtos
         public DateTime PublishTime { get; set; }
         public string MaterialTypeName { get; set; }
         public int MaterialTypeId { get; set; }
-        // public IEnumerable<ReviewReadDto> Reviews { get; set; }
     }
 }

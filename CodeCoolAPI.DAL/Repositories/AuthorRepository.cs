@@ -1,5 +1,8 @@
-﻿using CodeCoolAPI.DAL.Context;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CodeCoolAPI.DAL.Context;
 using CodeCoolAPI.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Repositories
 {
@@ -7,6 +10,18 @@ namespace CodeCoolAPI.DAL.Repositories
     {
         public AuthorRepository(CodecoolContext db) : base(db)
         {
+        }
+        
+        public override async Task<Author> Find(int id)
+        {
+            return await _db.Authors.Include(x => x.Materials)
+                .FirstOrDefaultAsync(z => z.Id == id);
+        }
+        
+        public override async Task<IEnumerable<Author>> FindAll()
+        {
+            return await _db.Authors.Include(x => x.Materials)
+                .ToListAsync();
         }
     }
 }

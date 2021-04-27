@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CodeCoolAPI.DAL.Models;
 using CodeCoolAPI.Dtos;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace CodeCoolAPI.Services
 {
