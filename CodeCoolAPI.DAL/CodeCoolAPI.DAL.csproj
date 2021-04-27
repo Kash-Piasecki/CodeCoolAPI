@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Context" />
       <Folder Include="Repositories" />
       <Folder Include="UnitOfWork" />
     </ItemGroup>
