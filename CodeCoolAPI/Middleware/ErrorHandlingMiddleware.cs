@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CodeCoolAPI.CustomExceptions;
+using CodeCoolAPI.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -24,20 +25,20 @@ namespace CodeCoolAPI.Middleware
             catch (BadRequestException badRequest)
             {
                 context.Response.StatusCode = 404;
-                _logger.LogWarning("Bad Request Exception");
+                _logger.LogWarning(LogMessages.BadRequest);
                 await context.Response.WriteAsync(badRequest.Message);
             }
             catch (NotFoundException notFoundException)
             {
                 context.Response.StatusCode = 404;
-                _logger.LogWarning("Entity not found exception");
+                _logger.LogWarning(LogMessages.EntityNotFound);
                 await context.Response.WriteAsync(notFoundException.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 context.Response.StatusCode = 500;
-                _logger.LogError("Internal Server Error");
-                await context.Response.WriteAsync("Internal Server Error");
+                _logger.LogError(LogMessages.InternalServerError);
+                await context.Response.WriteAsync(LogMessages.InternalServerError);
             }
         }
     }

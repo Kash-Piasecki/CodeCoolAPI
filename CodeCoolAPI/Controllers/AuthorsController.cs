@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
+using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult<IEnumerable<AuthorReadDto>>> Get()
         {
             var actorReadDtos = await _authorService.ReadAllAuthors();
-            _logger.LogInformation("Entities list found");
+            _logger.LogInformation(LogMessages.EntitiesFound);
             return Ok(actorReadDtos);
         }
         
@@ -33,7 +34,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult<AuthorReadDto>> Get(int id)
         {
             var readAuthorById = await _authorService.ReadAuthorById(id);
-            _logger.LogInformation("Entity found");
+            _logger.LogInformation(LogMessages.EntityFound);
             return Ok(readAuthorById);
         }
 
@@ -41,7 +42,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Post(AuthorUpsertDto authorUpsertDto)
         {
             var authorReadDto = await _authorService.CreateAuthorReadDto(authorUpsertDto);
-            _logger.LogInformation("Entity created");
+            _logger.LogInformation(LogMessages.EntityCreated);
             return CreatedAtAction(nameof(Get), new {authorReadDto.Id}, authorReadDto);
         }
         
@@ -49,7 +50,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Put(int id, AuthorUpsertDto authorUpsertDto)
         {
             await _authorService.UpdateAuthor(id, authorUpsertDto);
-            _logger.LogInformation("Entity updated");
+            _logger.LogInformation(LogMessages.EntityUpdated);
             return Ok();
         }
         
@@ -62,7 +63,7 @@ namespace CodeCoolAPI.Controllers
             if (!TryValidateModel(authorToPatch))
                 return ValidationProblem(ModelState);
             await _authorService.MapPatch(author, authorToPatch);
-            _logger.LogInformation("Entity patched");
+            _logger.LogInformation(LogMessages.EntityUpdated);
             return NoContent();
         }
 
@@ -70,7 +71,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             await _authorService.DeleteAuthor(id);
-            _logger.LogInformation("Entity deleted");
+            _logger.LogInformation(LogMessages.EntityDeleted);
             return NoContent();
         }
     }

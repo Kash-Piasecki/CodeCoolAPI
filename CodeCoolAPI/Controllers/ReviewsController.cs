@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
+using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult<IEnumerable<ReviewReadDto>>> Get()
         {
             var reviewReadDtoList = await _reviewService.ReadAllReviews();
-            _logger.LogInformation("Entities list found");
+            _logger.LogInformation(LogMessages.EntitiesFound);
             return Ok(reviewReadDtoList);
         }
 
@@ -32,7 +33,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult<ReviewReadDto>> Get(int id)
         {
             var reviewReadById = await _reviewService.ReadReviewById(id);
-            _logger.LogInformation("Entity found");
+            _logger.LogInformation(LogMessages.EntityFound);
             return Ok(reviewReadById);
         }
 
@@ -40,7 +41,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Post(ReviewUpsertDto reviewUpsertDto)
         {
             var reviewReadDto = await _reviewService.CreateReviewReadDto(reviewUpsertDto);
-            _logger.LogInformation("Entity created");
+            _logger.LogInformation(LogMessages.EntityCreated);
             return CreatedAtAction(nameof(Get), new {reviewReadDto.Id}, reviewReadDto);
         }
 
@@ -48,7 +49,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Put(int id, ReviewUpsertDto reviewUpsertDto)
         {
             await _reviewService.UpdateReview(id, reviewUpsertDto);
-            _logger.LogInformation("Entity updated");
+            _logger.LogInformation(LogMessages.EntityUpdated);
             return Ok();
         }
 
@@ -56,7 +57,7 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             await _reviewService.DeleteReview(id);
-            _logger.LogInformation("Entity deleted");
+            _logger.LogInformation(LogMessages.EntityDeleted);
             return NoContent();
         }
     }
