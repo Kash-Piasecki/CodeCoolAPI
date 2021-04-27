@@ -49,11 +49,20 @@ namespace CodeCoolAPI
             services.AddTransient<IMaterialTypeService, MaterialTypeService>();
             services.AddTransient<IMaterialService, MaterialService>();
             services.AddTransient<IReviewService, ReviewService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowEveryOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AllowEveryOrigin");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
