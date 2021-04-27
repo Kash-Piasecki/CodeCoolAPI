@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
-using CodeCoolAPI.Dtos.MaterialType;
 
 namespace CodeCoolAPI.Services
 {

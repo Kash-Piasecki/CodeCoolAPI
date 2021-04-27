@@ -1,4 +1,4 @@
-﻿namespace CodeCoolAPI.Dtos.MaterialType
+﻿namespace CodeCoolAPI.Dtos
 {
     public class MaterialTypeReadDto
     {

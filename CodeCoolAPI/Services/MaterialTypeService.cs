@@ -5,7 +5,7 @@ using AutoMapper;
 using CodeCoolAPI.CustomExceptions;
 using CodeCoolAPI.DAL.Models;
 using CodeCoolAPI.DAL.UnitOfWork;
-using CodeCoolAPI.Dtos.MaterialType;
+using CodeCoolAPI.Dtos;
 
 namespace CodeCoolAPI.Services
 {

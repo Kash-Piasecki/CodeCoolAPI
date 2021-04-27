@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CodeCoolAPI.DAL.Models;
 using CodeCoolAPI.Dtos;
-using CodeCoolAPI.Dtos.MaterialType;
 
 namespace CodeCoolAPI.Profiles
 {
@@ -16,6 +15,12 @@ namespace CodeCoolAPI.Profiles
             CreateMap<MaterialType, MaterialTypeReadDto>();
             CreateMap<MaterialTypeUpsertDto, MaterialType>();
             CreateMap<MaterialType, MaterialTypeUpsertDto>();
+            
+            CreateMap<Material, MaterialReadDto>()
+                .ForMember(x => x.AuthorName, y => y.MapFrom(a => a.Author.Name))
+                .ForMember(x => x.MaterialTypeName, y => y.MapFrom(m => m.MaterialType.Name));
+            CreateMap<MaterialUpsertDto, Material>();
+            CreateMap<Material, MaterialUpsertDto>();
         }
     }
 }

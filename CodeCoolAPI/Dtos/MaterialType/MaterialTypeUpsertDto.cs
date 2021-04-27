@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CodeCoolAPI.Dtos.MaterialType
+namespace CodeCoolAPI.Dtos
 {
     public class MaterialTypeUpsertDto
     {
