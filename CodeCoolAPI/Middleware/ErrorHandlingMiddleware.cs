@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using CodeCoolAPI.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace CodeCoolAPI.Middleware
@@ -6,7 +8,7 @@ namespace CodeCoolAPI.Middleware
     public class ErrorHandlingMiddleware : IMiddleware
 
     {
-    public async Task<> InvokeAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
         {
