@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace CodeCoolAPI.DAL.Models
 {
@@ -13,5 +14,9 @@ namespace CodeCoolAPI.DAL.Models
         public MaterialType MaterialType { get; set; }
         public int MaterialTypeId { get; set; }
         public IEnumerable<Review> Reviews { get; set; }
+
+        // public IdentityUser IdentityUser { get; set; }
+        // public int IdentityUserId { get; set; }
+        
     }
 }
