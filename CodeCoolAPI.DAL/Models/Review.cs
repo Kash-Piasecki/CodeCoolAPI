@@ -1,4 +1,7 @@
-﻿namespace CodeCoolAPI.DAL.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
+
+namespace CodeCoolAPI.DAL.Models
 {
     public class Review : BaseEntity
     {
@@ -6,5 +9,9 @@
         public int DigitBased { get; set; }
         public Material Material { get; set; }
         public int MaterialId { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public IdentityUser User { get; set; }
+        
     }
 }

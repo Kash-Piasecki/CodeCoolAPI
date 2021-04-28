@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using CodeCoolAPI.DAL.Context;
 using CodeCoolAPI.DAL.UnitOfWork;
+using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Jwt;
 using CodeCoolAPI.Middleware;
 using CodeCoolAPI.Services;

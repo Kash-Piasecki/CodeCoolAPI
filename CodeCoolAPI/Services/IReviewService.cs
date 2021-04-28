@@ -13,9 +13,10 @@ namespace CodeCoolAPI.Services
     {
         Task<ReviewReadDto> ReadReviewById(int id);
         Task<IEnumerable<ReviewReadDto>> ReadAllReviews();
-        Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto);
+        Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, string userId);
         Task UpdateReview(int id, ReviewUpsertDto reviewUpsertDto);
         Task DeleteReview(int id);
+        Task UserOwnsPost(int id, string userId);
     }
 
     class ReviewService : IReviewService
@@ -46,9 +47,10 @@ namespace CodeCoolAPI.Services
             return reviewReadDtoList;
         }
 
-        public async Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto)
+        public async Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, string userId)
         {
             var review = _mapper.Map<Review>(reviewUpsertDto);
+            review.UserId = userId;
             await _unitOfWork.Reviews.Create(review);
             await _unitOfWork.Save();
             return _mapper.Map<ReviewReadDto>(review);
@@ -64,11 +66,18 @@ namespace CodeCoolAPI.Services
 
         public async  Task DeleteReview(int id)
         {
-            var material = await FindReview(id);
-            await _unitOfWork.Reviews.Delete(material);
+            var review = await FindReview(id);
+            await _unitOfWork.Reviews.Delete(review);
             await _unitOfWork.Save();
         }
-        
+
+        public async Task UserOwnsPost(int id, string userId)
+        {
+            var review = await FindReview(id);
+            if (review is null || review.UserId != userId)
+                throw new BadRequestException("This review does not belong to you.");
+        }
+
         private async Task<Review> FindReview(int id)
         {
             var review = await _unitOfWork.Reviews.Find(id);

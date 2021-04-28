@@ -1,4 +1,6 @@
-﻿using CodeCoolAPI.DAL.Models;
+﻿using System;
+using CodeCoolAPI.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,5 +30,7 @@ namespace CodeCoolAPI.DAL.Context
                 .HasForeignKey(x => x.MaterialTypeId);
             this.SeedDatabase(modelBuilder);
         }
+        
+
     }
 }

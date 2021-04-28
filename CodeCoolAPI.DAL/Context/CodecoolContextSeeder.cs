@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeCoolAPI.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Context
