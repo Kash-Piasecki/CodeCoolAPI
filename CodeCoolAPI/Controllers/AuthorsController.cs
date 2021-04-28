@@ -3,12 +3,15 @@ using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
 using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace CodeCoolAPI.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase

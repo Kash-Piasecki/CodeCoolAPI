@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using CodeCoolAPI.DAL.Context;
 using CodeCoolAPI.DAL.UnitOfWork;
 using CodeCoolAPI.Jwt;
 using CodeCoolAPI.Middleware;
 using CodeCoolAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -63,22 +66,32 @@ namespace CodeCoolAPI
             });
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CodecoolContext>();
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(setup =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CodeCoolAPI", Version = "v1"});
-                var security = new Dictionary<string, IEnumerable<string>>
+                // Include 'SecurityScheme' to use JWT Authentication
+                var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
-                    {JwtSettings.Bearer, new string[0]}
-                };
-                
-                c.AddSecurityDefinition(JwtSettings.Bearer, new OpenApiSecurityScheme
-                {
-                    Description =
-                        "JWT Authorization header using the Bearer scheme.",
-                    Name = "Authorization",
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = SecuritySchemeType.Http,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                setup.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
                 });
+
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
