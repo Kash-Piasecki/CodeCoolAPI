@@ -187,6 +187,7 @@ namespace CodeCoolAPI.DAL.Context
                 MaterialId = 1,
                 DigitBased = 2,
                 TextBased = "Best stuff ever",
+                UserId = 1,
             };
             
             var review2 = new Review()
@@ -195,6 +196,7 @@ namespace CodeCoolAPI.DAL.Context
                 MaterialId = 1,
                 DigitBased = 10,
                 TextBased = "Best stuff ever",
+                UserId = 1,
             };
             
             var review3 = new Review()
@@ -203,6 +205,7 @@ namespace CodeCoolAPI.DAL.Context
                 MaterialId = 2,
                 DigitBased = 5,
                 TextBased = "Mediocre",
+                UserId = 1,
             };
             
             var review4 = new Review()
@@ -211,6 +214,7 @@ namespace CodeCoolAPI.DAL.Context
                 MaterialId = 3,
                 DigitBased = 5,
                 TextBased = "Mediocre",
+                UserId = 2,
             };
             
             var review5 = new Review()
@@ -219,6 +223,7 @@ namespace CodeCoolAPI.DAL.Context
                 MaterialId = 4,
                 DigitBased = 1,
                 TextBased = "Tl;Dr",
+                UserId = 2,
             };
             
             var review6 = new Review()
@@ -227,6 +232,7 @@ namespace CodeCoolAPI.DAL.Context
                 MaterialId = 5,
                 DigitBased = 10,
                 TextBased = "Tl;Dr",
+                UserId = 2,
             };
             
             modelBuilder.Entity<Review>().HasData(review1);

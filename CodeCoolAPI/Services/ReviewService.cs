@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -37,9 +38,10 @@ namespace CodeCoolAPI.Services
             return reviewReadDtoList;
         }
 
-        public async Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto)
+        public async Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, string id)
         {
             var review = _mapper.Map<Review>(reviewUpsertDto);
+            review.UserId = Convert.ToInt32(id);
             await _unitOfWork.Reviews.Create(review);
             await _unitOfWork.Save();
             return _mapper.Map<ReviewReadDto>(review);

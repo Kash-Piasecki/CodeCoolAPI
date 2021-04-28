@@ -28,6 +28,8 @@ namespace CodeCoolAPI.DAL.Context
                 .HasForeignKey(x => x.MaterialTypeId);
             modelBuilder.Entity<User>().HasOne(x => x.UserRole).WithMany(x => x.Users)
                 .HasForeignKey(x => x.UserRoleId);
+            modelBuilder.Entity<Review>().HasOne(x => x.User).WithMany(x => x.Reviews)
+                .HasForeignKey(x => x.UserId);
             this.SeedDatabase(modelBuilder);
         }
     }

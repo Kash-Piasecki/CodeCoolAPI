@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
 using CodeCoolAPI.Helpers;
@@ -78,6 +79,8 @@ namespace CodeCoolAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
+            var userClaims = HttpContext.User.Claims.ToList()[0];
+
             await _authorService.DeleteAuthor(id);
             _logger.LogInformation(LogMessages.EntityDeleted);
             return NoContent();

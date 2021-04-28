@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
 using CodeCoolAPI.Helpers;
@@ -42,7 +43,8 @@ namespace CodeCoolAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(ReviewUpsertDto reviewUpsertDto)
         {
-            var reviewReadDto = await _reviewService.CreateReviewReadDto(reviewUpsertDto);
+            var userId = HttpContext.User.Claims.ToList()[0].Value;
+            var reviewReadDto = await _reviewService.CreateReviewReadDto(reviewUpsertDto, userId);
             _logger.LogInformation(LogMessages.EntityCreated);
             return CreatedAtAction(nameof(Get), new {reviewReadDto.Id}, reviewReadDto);
         }
@@ -50,6 +52,7 @@ namespace CodeCoolAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, ReviewUpsertDto reviewUpsertDto)
         {
+            
             await _reviewService.UpdateReview(id, reviewUpsertDto);
             _logger.LogInformation(LogMessages.EntityUpdated);
             return Ok();
