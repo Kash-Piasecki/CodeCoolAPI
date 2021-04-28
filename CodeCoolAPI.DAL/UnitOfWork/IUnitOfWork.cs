@@ -9,6 +9,7 @@ namespace CodeCoolAPI.DAL.UnitOfWork
         public IMaterialRepository Materials { get; set; }
         public IMaterialTypeRepository MaterialTypes { get; set; }
         public IReviewRepository Reviews { get; set; }
+        public IUserRepository Users { get; set; }
 
         Task Save();
     }

@@ -11,6 +11,7 @@ namespace CodeCoolAPI.DAL.UnitOfWork
         public IMaterialRepository Materials { get; set; }
         public IMaterialTypeRepository MaterialTypes { get; set; }
         public IReviewRepository Reviews { get; set; }
+        public IUserRepository Users { get; set; }
 
         public UnitOfWork(CodecoolContext db)
         {
@@ -19,6 +20,7 @@ namespace CodeCoolAPI.DAL.UnitOfWork
             Materials = new MaterialRepository(_db);
             MaterialTypes = new MaterialTypeRepository(_db);
             Reviews = new ReviewRepository(_db);
+            Users = new UserRepository(_db);
         }
         
         public async Task Save()

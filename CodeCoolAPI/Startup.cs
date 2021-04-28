@@ -6,6 +6,7 @@ using CodeCoolAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,6 +74,7 @@ namespace CodeCoolAPI
             services.AddTransient<IMaterialTypeService, MaterialTypeService>();
             services.AddTransient<IMaterialService, MaterialService>();
             services.AddTransient<IReviewService, ReviewService>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddCors(options =>
             {
