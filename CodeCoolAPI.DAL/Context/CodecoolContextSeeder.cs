@@ -12,6 +12,42 @@ namespace CodeCoolAPI.DAL.Context
             SeedMaterialTypes(modelBuilder);
             SeedMaterials(modelBuilder);
             SeedReviews(modelBuilder);
+            SeedUserRoles(modelBuilder);
+            // SeedUsers(modelBuilder);
+        }
+
+        private static void SeedUserRoles(ModelBuilder modelBuilder)
+        {
+            var adminRole = new UserRole()
+            {
+                Id = 1,
+                Name = "Admin",
+            };
+            var userRole = new UserRole()
+            {
+                Id = 2,
+                Name = "User",
+            };
+            modelBuilder.Entity<UserRole>().HasData(adminRole);
+            modelBuilder.Entity<UserRole>().HasData(userRole);
+        }
+        
+        private static void SeedUsers(ModelBuilder modelBuilder)
+        {
+            var admin = new User()
+            {
+                Id = 1,
+                Email = "admin@mail.com",
+                UserRoleId = 1,
+            };
+            var user = new User()
+            {
+                Id = 2,
+                Email = "user@mail.com",
+                UserRoleId = 2,
+            };
+            modelBuilder.Entity<User>().HasData(admin);
+            modelBuilder.Entity<User>().HasData(user);
         }
 
         private static void SeedAuthors(ModelBuilder modelBuilder)
