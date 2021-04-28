@@ -1,7 +1,9 @@
 using System;
+using System.Text;
 using CodeCoolAPI.DAL.Context;
 using CodeCoolAPI.DAL.Models;
 using CodeCoolAPI.DAL.UnitOfWork;
+using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Middleware;
 using CodeCoolAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 
@@ -29,7 +32,25 @@ namespace CodeCoolAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            var authenticationSettings = new AuthenticationSettings();
+            Configuration.GetSection("Authentication").Bind(authenticationSettings);
+
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = "Bearer";
+                option.DefaultScheme = "Bearer";
+                option.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(config =>
+            {
+                config.RequireHttpsMetadata = false;
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // ValidIssuer = authenticationSettings.JwtIssuer,
+                    // ValidAudience = authenticationSettings.JwtIssuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+                };
+            });
             
             services.AddControllers().AddNewtonsoftJson(options =>
             {
@@ -78,6 +99,7 @@ namespace CodeCoolAPI
             services.AddTransient<IMaterialService, MaterialService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             services.AddCors(options =>
             {
@@ -102,6 +124,8 @@ namespace CodeCoolAPI
             
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
+            app.UseAuthentication();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
