@@ -2,6 +2,7 @@
 using CodeCoolAPI.Dtos.User;
 using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +25,15 @@ namespace CodeCoolAPI.Controllers
         public async Task<ActionResult> Register(RegisterUserDto registerUserDto)
         {
             await _identityService.RegisterUser(registerUserDto);
+            _logger.LogInformation(LogMessages.UserRegisteredSuccess);
+            return Ok();
+        }
+        
+        [Authorize]
+        [HttpPost("RegisterAdmin")]
+        public async Task<ActionResult> RegisterAdmin(RegisterUserDto registerUserDto)
+        {
+            await _identityService.RegisterAdmin(registerUserDto);
             _logger.LogInformation(LogMessages.UserRegisteredSuccess);
             return Ok();
         }

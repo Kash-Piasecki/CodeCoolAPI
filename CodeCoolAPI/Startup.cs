@@ -1,5 +1,6 @@
 using System;
 using CodeCoolAPI.DAL.Context;
+using CodeCoolAPI.DAL.Models;
 using CodeCoolAPI.DAL.UnitOfWork;
 using CodeCoolAPI.Middleware;
 using CodeCoolAPI.Services;
@@ -28,6 +29,8 @@ namespace CodeCoolAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

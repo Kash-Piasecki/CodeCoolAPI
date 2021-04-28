@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeCoolAPI.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Context
@@ -13,7 +14,7 @@ namespace CodeCoolAPI.DAL.Context
             SeedMaterials(modelBuilder);
             SeedReviews(modelBuilder);
             SeedUserRoles(modelBuilder);
-            // SeedUsers(modelBuilder);
+            SeedUsers(modelBuilder);
         }
 
         private static void SeedUserRoles(ModelBuilder modelBuilder)
@@ -34,18 +35,21 @@ namespace CodeCoolAPI.DAL.Context
         
         private static void SeedUsers(ModelBuilder modelBuilder)
         {
+            var hash = new PasswordHasher<User>();
             var admin = new User()
             {
                 Id = 1,
                 Email = "admin@mail.com",
                 UserRoleId = 1,
             };
+            admin.PasswordHash = hash.HashPassword(admin, "Admin123#");
             var user = new User()
             {
                 Id = 2,
                 Email = "user@mail.com",
                 UserRoleId = 2,
             };
+            user.PasswordHash = hash.HashPassword(user, "User123#");
             modelBuilder.Entity<User>().HasData(admin);
             modelBuilder.Entity<User>().HasData(user);
         }
