@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
 using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -10,6 +11,7 @@ namespace CodeCoolAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MaterialTypesController : ControllerBase
     {
         private readonly IMaterialTypeService _materialTypeService;
@@ -38,6 +40,7 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Post(MaterialTypeUpsertDto materialTypeUpsertDto)
         {
             var materialTypeReadDto = await _materialTypeService.CreateMaterialTypeReadDto(materialTypeUpsertDto);
@@ -46,6 +49,7 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Put(int id, MaterialTypeUpsertDto materialTypeUpsertDto)
         {
             await _materialTypeService.UpdateMaterialType(id, materialTypeUpsertDto);
@@ -54,6 +58,7 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             await _materialTypeService.DeleteMaterialType(id);

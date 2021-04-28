@@ -34,11 +34,11 @@ namespace CodeCoolAPI.Middleware
                 _logger.LogWarning(LogMessages.EntityNotFound);
                 await context.Response.WriteAsync(notFoundException.Message);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 context.Response.StatusCode = 500;
                 _logger.LogError(LogMessages.InternalServerError);
-                await context.Response.WriteAsync(LogMessages.InternalServerError);
+                await context.Response.WriteAsync(LogMessages.InternalServerError + e.Message);
             }
         }
     }

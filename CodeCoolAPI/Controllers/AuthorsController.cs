@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CodeCoolAPI.Dtos;
 using CodeCoolAPI.Helpers;
 using CodeCoolAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ namespace CodeCoolAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _authorService;
@@ -41,6 +43,7 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Post(AuthorUpsertDto authorUpsertDto)
         {
             var authorReadDto = await _authorService.CreateAuthorReadDto(authorUpsertDto);
@@ -49,6 +52,7 @@ namespace CodeCoolAPI.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Put(int id, AuthorUpsertDto authorUpsertDto)
         {
             await _authorService.UpdateAuthor(id, authorUpsertDto);
@@ -57,6 +61,7 @@ namespace CodeCoolAPI.Controllers
         }
         
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Patch(int id, JsonPatchDocument<AuthorUpsertDto> patchDocument)
         {
             var author = await _authorService.FindAuthor(id);
@@ -70,6 +75,7 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             await _authorService.DeleteAuthor(id);

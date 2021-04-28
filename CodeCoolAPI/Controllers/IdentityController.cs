@@ -29,7 +29,7 @@ namespace CodeCoolAPI.Controllers
             return Ok();
         }
         
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost("RegisterAdmin")]
         public async Task<ActionResult> RegisterAdmin(RegisterUserDto registerUserDto)
         {

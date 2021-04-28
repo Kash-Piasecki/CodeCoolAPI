@@ -88,6 +88,7 @@ namespace CodeCoolAPI.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.UserRole.Name)
             };
 
@@ -98,7 +99,7 @@ namespace CodeCoolAPI.Services
                 claims, expires: expires,
                 signingCredentials: credentials);
             var tokenHandler = new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(token);
+            return await Task.Run(() => tokenHandler.WriteToken(token));
         }
     }
 }
