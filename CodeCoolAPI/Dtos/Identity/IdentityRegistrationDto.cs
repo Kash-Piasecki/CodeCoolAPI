@@ -6,6 +6,7 @@ namespace CodeCoolAPI.Dtos
     {
         [Required]
         [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Not a proper email address")]        
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
