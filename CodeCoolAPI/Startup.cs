@@ -34,6 +34,7 @@ namespace CodeCoolAPI
         {
             var authenticationSettings = new AuthenticationSettings();
             Configuration.GetSection("Authentication").Bind(authenticationSettings);
+            services.AddSingleton(authenticationSettings);
 
             services.AddAuthentication(option =>
             {
@@ -46,8 +47,8 @@ namespace CodeCoolAPI
                 config.SaveToken = true;
                 config.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // ValidIssuer = authenticationSettings.JwtIssuer,
-                    // ValidAudience = authenticationSettings.JwtIssuer,
+                    ValidIssuer = authenticationSettings.JwtIssuer,
+                    ValidAudience = authenticationSettings.JwtIssuer,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
                 };
             });

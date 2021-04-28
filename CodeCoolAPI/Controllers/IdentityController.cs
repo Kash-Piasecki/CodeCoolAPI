@@ -38,5 +38,13 @@ namespace CodeCoolAPI.Controllers
             return Ok();
         }
         
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(LoginUserDto loginUserDto)
+        {
+            var token = await _identityService.Login(loginUserDto);
+            _logger.LogInformation(LogMessages.UserLoginSuccess);
+            return Ok(token);
+        }
+        
     }
 }
