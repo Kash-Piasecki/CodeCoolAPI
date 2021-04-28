@@ -1,9 +1,10 @@
 ﻿using CodeCoolAPI.DAL.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Context
 {
-    public class CodecoolContext : DbContext
+    public class CodecoolContext : IdentityDbContext
     {
         public CodecoolContext(DbContextOptions<CodecoolContext> options) : base (options)
         {

@@ -11,7 +11,7 @@ namespace CodeCoolAPI
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("serilogsettings.json")
+                .AddJsonFile("logsettings.json")
                 .Build();
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)

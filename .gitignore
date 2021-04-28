@@ -11,8 +11,9 @@
 *.user
 *.userosscache
 *.sln.docstates
-appsettings.json
 *.json
+appsettings.json
+logsettings.json
 log.json
 log.txt
 

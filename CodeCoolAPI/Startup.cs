@@ -9,6 +9,7 @@ using CodeCoolAPI.Middleware;
 using CodeCoolAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,6 +61,8 @@ namespace CodeCoolAPI
                 options.UseSqlServer(Configuration.GetConnectionString("CodeCoolConnection"),
                     optionsBuilder => optionsBuilder.MigrationsAssembly("CodeCoolAPI"));
             });
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CodecoolContext>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "CodeCoolAPI", Version = "v1"});
@@ -87,6 +90,7 @@ namespace CodeCoolAPI
             services.AddTransient<IMaterialTypeService, MaterialTypeService>();
             services.AddTransient<IMaterialService, MaterialService>();
             services.AddTransient<IReviewService, ReviewService>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddCors(options =>
             {
