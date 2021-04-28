@@ -14,10 +14,11 @@ namespace CodeCoolAPI.Controllers
     [Authorize]
     public class MaterialTypesController : ControllerBase
     {
-        private readonly IMaterialTypeService _materialTypeService;
         private readonly ILogger _logger;
+        private readonly IMaterialTypeService _materialTypeService;
 
-        public MaterialTypesController(IMaterialTypeService materialTypeService, ILogger<MaterialTypesController> logger)
+        public MaterialTypesController(IMaterialTypeService materialTypeService,
+            ILogger<MaterialTypesController> logger)
         {
             _materialTypeService = materialTypeService;
             _logger = logger;

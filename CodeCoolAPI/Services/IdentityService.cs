@@ -15,11 +15,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CodeCoolAPI.Services
 {
-    class IdentityService : IIdentityService
+    internal class IdentityService : IIdentityService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
+        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IUnitOfWork _unitOfWork;
 
         public IdentityService(IUnitOfWork unitOfWork, IPasswordHasher<User> passwordHasher,
             AuthenticationSettings authenticationSettings)
@@ -36,10 +36,10 @@ namespace CodeCoolAPI.Services
             if (isInDatabse is not null)
                 throw new BadRequestException("User already exists in the database");
             var userRoleId = 2;
-            var newUser = new User()
+            var newUser = new User
             {
                 Email = registerUserDto.Email,
-                UserRoleId = userRoleId,
+                UserRoleId = userRoleId
             };
             newUser.PasswordHash = _passwordHasher.HashPassword(newUser, registerUserDto.Password);
             await _unitOfWork.Users.Create(newUser);
@@ -52,10 +52,10 @@ namespace CodeCoolAPI.Services
             if (user is not null)
                 throw new BadRequestException("User already exists in the database");
             var adminRoleId = 1;
-            var newUser = new User()
+            var newUser = new User
             {
                 Email = registerUserDto.Email,
-                UserRoleId = adminRoleId,
+                UserRoleId = adminRoleId
             };
             newUser.PasswordHash = _passwordHasher.HashPassword(newUser, registerUserDto.Password);
             await _unitOfWork.Users.Create(newUser);
@@ -76,12 +76,12 @@ namespace CodeCoolAPI.Services
 
         private async Task<string> GenerateJwt(User user)
         {
-            var claims = new List<Claim>()
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.UserRole.Name)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.Email),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Role, user.UserRole.Name)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));

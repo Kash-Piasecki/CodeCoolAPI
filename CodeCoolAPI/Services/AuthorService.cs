@@ -9,17 +9,17 @@ using CodeCoolAPI.Dtos;
 
 namespace CodeCoolAPI.Services
 {
-    class AuthorService : IAuthorService
+    internal class AuthorService : IAuthorService
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AuthorService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        
+
         public async Task<AuthorReadDto> ReadAuthorById(int id)
         {
             var author = await FindAuthor(id);
@@ -79,6 +79,5 @@ namespace CodeCoolAPI.Services
                 throw new NotFoundException("Author not found");
             return author;
         }
-        
     }
 }

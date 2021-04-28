@@ -28,7 +28,7 @@ namespace CodeCoolAPI.Controllers
             _logger.LogInformation(LogMessages.UserRegisteredSuccess);
             return Ok();
         }
-        
+
         [Authorize(Roles = "Admin")]
         [HttpPost("RegisterAdmin")]
         public async Task<ActionResult> RegisterAdmin(RegisterUserDto registerUserDto)
@@ -37,7 +37,7 @@ namespace CodeCoolAPI.Controllers
             _logger.LogInformation(LogMessages.UserRegisteredSuccess);
             return Ok();
         }
-        
+
         [HttpPost("Login")]
         public async Task<ActionResult> Login(LoginUserDto loginUserDto)
         {
@@ -45,6 +45,5 @@ namespace CodeCoolAPI.Controllers
             _logger.LogInformation(LogMessages.UserLoginSuccess);
             return Ok(token);
         }
-        
     }
 }

@@ -9,17 +9,17 @@ using CodeCoolAPI.Dtos;
 
 namespace CodeCoolAPI.Services
 {
-    class MaterialTypeService : IMaterialTypeService
+    internal class MaterialTypeService : IMaterialTypeService
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MaterialTypeService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        
+
         public async Task<MaterialTypeReadDto> ReadMaterialTypeById(int id)
         {
             var materialType = await FindMaterialType(id);
@@ -53,13 +53,13 @@ namespace CodeCoolAPI.Services
             await _unitOfWork.Save();
         }
 
-        public async  Task DeleteMaterialType(int id)
+        public async Task DeleteMaterialType(int id)
         {
             var materialType = await FindMaterialType(id);
             await _unitOfWork.MaterialTypes.Delete(materialType);
             await _unitOfWork.Save();
         }
-        
+
         private async Task<MaterialType> FindMaterialType(int id)
         {
             var materialType = await _unitOfWork.MaterialTypes.Find(id);

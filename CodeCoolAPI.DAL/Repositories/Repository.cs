@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Repositories
 {
-    class Repository<T> : IRepository<T> where T : class
+    internal class Repository<T> : IRepository<T> where T : class
     {
         protected readonly CodecoolContext _db;
 

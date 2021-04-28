@@ -6,7 +6,6 @@ namespace CodeCoolAPI.CustomExceptions
     {
         public NotFoundException(string message) : base(message)
         {
-
         }
     }
 }

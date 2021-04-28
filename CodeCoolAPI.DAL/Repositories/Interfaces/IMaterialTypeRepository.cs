@@ -4,6 +4,5 @@ namespace CodeCoolAPI.DAL.Repositories
 {
     public interface IMaterialTypeRepository : IRepository<MaterialType>
     {
-        
     }
 }

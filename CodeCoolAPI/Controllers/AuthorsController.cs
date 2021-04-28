@@ -33,9 +33,9 @@ namespace CodeCoolAPI.Controllers
             _logger.LogInformation(LogMessages.EntitiesFound);
             return Ok(actorReadDtos);
         }
-        
+
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 300, VaryByQueryKeys = new []{"id"})]
+        [ResponseCache(Duration = 300, VaryByQueryKeys = new[] {"id"})]
         public async Task<ActionResult<AuthorReadDto>> Get(int id)
         {
             var readAuthorById = await _authorService.ReadAuthorById(id);
@@ -51,7 +51,7 @@ namespace CodeCoolAPI.Controllers
             _logger.LogInformation(LogMessages.EntityCreated);
             return CreatedAtAction(nameof(Get), new {authorReadDto.Id}, authorReadDto);
         }
-        
+
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Put(int id, AuthorUpsertDto authorUpsertDto)
@@ -60,7 +60,7 @@ namespace CodeCoolAPI.Controllers
             _logger.LogInformation(LogMessages.EntityUpdated);
             return Ok();
         }
-        
+
         [HttpPatch("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Patch(int id, JsonPatchDocument<AuthorUpsertDto> patchDocument)

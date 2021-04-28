@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,10 +9,10 @@ using CodeCoolAPI.Dtos;
 
 namespace CodeCoolAPI.Services
 {
-    class ReviewService : IReviewService
+    internal class ReviewService : IReviewService
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -50,7 +49,7 @@ namespace CodeCoolAPI.Services
         public async Task UpdateReview(int id, ReviewUpsertDto reviewUpsertDto, int userId, string userRole)
         {
             var review = await FindReview(id);
-            if (review.UserId != userId && userRole != "Admin") 
+            if (review.UserId != userId && userRole != "Admin")
                 throw new BadRequestException("Unauthorized Attempt");
             _mapper.Map(reviewUpsertDto, review);
             await _unitOfWork.Reviews.Update(review);

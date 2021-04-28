@@ -16,8 +16,8 @@ namespace CodeCoolAPI.Controllers
     [Authorize]
     public class ReviewsController : ControllerBase
     {
-        private readonly IReviewService _reviewService;
         private readonly ILogger _logger;
+        private readonly IReviewService _reviewService;
 
         public ReviewsController(IReviewService reviewService, ILogger<ReviewsController> logger)
         {

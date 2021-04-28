@@ -6,7 +6,6 @@ namespace CodeCoolAPI.CustomExceptions
     {
         public BadRequestException(string message) : base(message)
         {
-            
         }
     }
 }

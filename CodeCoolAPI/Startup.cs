@@ -48,7 +48,7 @@ namespace CodeCoolAPI
                 {
                     ValidIssuer = authenticationSettings.JwtIssuer,
                     ValidAudience = authenticationSettings.JwtIssuer,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
                 };
             });
 
@@ -84,15 +84,14 @@ namespace CodeCoolAPI
 
                 setup.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    { jwtSecurityScheme, Array.Empty<string>() }
+                    {jwtSecurityScheme, Array.Empty<string>()}
                 });
-
             });
-            
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddHttpContextAccessor();
-            
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IMaterialTypeService, MaterialTypeService>();
@@ -103,10 +102,7 @@ namespace CodeCoolAPI
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowEveryOrigin", builder =>
-                {
-                    builder.AllowAnyOrigin();
-                });
+                options.AddPolicy("AllowEveryOrigin", builder => { builder.AllowAnyOrigin(); });
             });
         }
 
@@ -121,11 +117,11 @@ namespace CodeCoolAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeCoolAPI v1"));
             }
-            
+
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthentication();
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -10,7 +10,7 @@ namespace CodeCoolAPI.Middleware
     public class ErrorHandlingMiddleware : IMiddleware
     {
         private readonly ILogger _logger;
-        
+
         public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
         {
             _logger = logger;

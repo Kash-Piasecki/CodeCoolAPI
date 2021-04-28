@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CodeCoolAPI.Dtos.User;
 
 namespace CodeCoolAPI.Services

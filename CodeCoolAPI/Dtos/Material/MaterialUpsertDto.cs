@@ -5,15 +5,19 @@ namespace CodeCoolAPI.Dtos
 {
     public class MaterialUpsertDto
     {
-        [Required]
+        [Required] 
         public int AuthorId { get; set; }
-        [Required, MaxLength(60)]
+
+        [Required] [MaxLength(60)] 
         public string Description { get; set; }
-        [MaxLength(60)]
+
+        [MaxLength(60)] 
         public string Location { get; set; }
-        [Required]
+
+        [Required] 
         public DateTime PublishTime { get; set; }
-        [Required]
+
+        [Required] 
         public int MaterialTypeId { get; set; }
     }
 }

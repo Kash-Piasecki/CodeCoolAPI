@@ -10,17 +10,17 @@ using CodeCoolAPI.Helpers;
 
 namespace CodeCoolAPI.Services
 {
-    class MaterialService : IMaterialService
+    internal class MaterialService : IMaterialService
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MaterialService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        
+
         public async Task<MaterialReadDto> ReadMaterialById(int id)
         {
             var material = await FindMaterial(id);
@@ -28,7 +28,8 @@ namespace CodeCoolAPI.Services
             return materialReadDto;
         }
 
-        public async Task<IEnumerable<MaterialReadDto>> ReadAllMaterials(string searchByTypeName, SortDirection sortByDateDirection)
+        public async Task<IEnumerable<MaterialReadDto>> ReadAllMaterials(string searchByTypeName,
+            SortDirection sortByDateDirection)
         {
             var materialList = await GetMaterialList(searchByTypeName);
             if (!materialList.Any())
@@ -37,14 +38,6 @@ namespace CodeCoolAPI.Services
             var materialDtoList = _mapper.Map<IEnumerable<MaterialReadDto>>(materialList);
             SortByDate(ref materialDtoList, sortByDateDirection);
             return materialDtoList;
-        }
-
-        private void SortByDate(ref IEnumerable<MaterialReadDto> materialDtoList, SortDirection sortByDateDirection)
-        {
-            if (sortByDateDirection is SortDirection.ASC)
-                materialDtoList = materialDtoList.OrderBy(x => x.PublishTime);
-            if (sortByDateDirection is SortDirection.DESC)
-                materialDtoList = materialDtoList.OrderByDescending(x => x.PublishTime);
         }
 
 
@@ -64,13 +57,21 @@ namespace CodeCoolAPI.Services
             await _unitOfWork.Save();
         }
 
-        public async  Task DeleteMaterial(int id)
+        public async Task DeleteMaterial(int id)
         {
             var material = await FindMaterial(id);
             await _unitOfWork.Materials.Delete(material);
             await _unitOfWork.Save();
         }
-        
+
+        private void SortByDate(ref IEnumerable<MaterialReadDto> materialDtoList, SortDirection sortByDateDirection)
+        {
+            if (sortByDateDirection is SortDirection.ASC)
+                materialDtoList = materialDtoList.OrderBy(x => x.PublishTime);
+            if (sortByDateDirection is SortDirection.DESC)
+                materialDtoList = materialDtoList.OrderByDescending(x => x.PublishTime);
+        }
+
         private async Task<Material> FindMaterial(int id)
         {
             var material = await _unitOfWork.Materials.Find(id);
@@ -78,6 +79,7 @@ namespace CodeCoolAPI.Services
                 throw new NotFoundException("Material not found");
             return material;
         }
+
         private async Task<IEnumerable<Material>> GetMaterialList(string searchByTypeName)
         {
             IEnumerable<Material> materialList;

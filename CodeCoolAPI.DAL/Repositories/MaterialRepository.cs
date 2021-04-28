@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Repositories
 {
-    class MaterialRepository : Repository<Material>, IMaterialRepository
+    internal class MaterialRepository : Repository<Material>, IMaterialRepository
     {
         public MaterialRepository(CodecoolContext db) : base(db)
         {
         }
-        
+
         public override async Task<Material> Find(int id)
         {
             return await _db.Materials.Include(x => x.Author).Include(x => x.MaterialType)
@@ -21,7 +21,8 @@ namespace CodeCoolAPI.DAL.Repositories
 
         public async Task<IEnumerable<Material>> FindAllByQuery(string searchByTypeName)
         {
-            return await _db.Materials.Include(x => x.Author).Include(x => x.MaterialType).Where(x => x.MaterialType.Name.Contains(searchByTypeName))
+            return await _db.Materials.Include(x => x.Author).Include(x => x.MaterialType)
+                .Where(x => x.MaterialType.Name.Contains(searchByTypeName))
                 .ToListAsync();
         }
 

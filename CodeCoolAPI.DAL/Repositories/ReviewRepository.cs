@@ -3,7 +3,7 @@ using CodeCoolAPI.DAL.Models;
 
 namespace CodeCoolAPI.DAL.Repositories
 {
-    class ReviewRepository : Repository<Review>, IReviewRepository
+    internal class ReviewRepository : Repository<Review>, IReviewRepository
     {
         public ReviewRepository(CodecoolContext db) : base(db)
         {

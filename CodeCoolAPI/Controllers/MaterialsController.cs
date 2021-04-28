@@ -14,8 +14,8 @@ namespace CodeCoolAPI.Controllers
     [Route("api/[controller]")]
     public class MaterialsController : ControllerBase
     {
-        private readonly IMaterialService _materialService;
         private readonly ILogger _logger;
+        private readonly IMaterialService _materialService;
 
         public MaterialsController(IMaterialService materialService, ILogger<MaterialsController> logger)
         {
@@ -24,7 +24,8 @@ namespace CodeCoolAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MaterialReadDto>>> Get(string searchByTypeName, SortDirection sortByDateDirection)
+        public async Task<ActionResult<IEnumerable<MaterialReadDto>>> Get(string searchByTypeName,
+            SortDirection sortByDateDirection)
         {
             var materialReadDtoList = await _materialService.ReadAllMaterials(searchByTypeName, sortByDateDirection);
             _logger.LogInformation(LogMessages.EntitiesFound);

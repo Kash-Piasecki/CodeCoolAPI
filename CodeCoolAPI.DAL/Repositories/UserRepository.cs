@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodeCoolAPI.DAL.Repositories
 {
-    class UserRepository : Repository<User>, IUserRepository
+    internal class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository(CodecoolContext db) : base(db)
         {
