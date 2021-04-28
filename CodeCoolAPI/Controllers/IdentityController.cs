@@ -36,5 +36,25 @@ namespace CodeCoolAPI.Controllers
                 Token = authResponse.Token
             });
         }
+        
+        [HttpPost("/Login")]
+        public async Task<IActionResult> Login(IdentityLoginDto identityLoginDto)
+        {
+            var authResponse =
+                await _identityService.Login(identityLoginDto.Email, identityLoginDto.Password);
+
+            if (!authResponse.Success)
+            {
+                return BadRequest(new AuthFailedResponse()
+                {
+                    Errors = authResponse.Errors
+                });
+            }
+
+            return Ok(new AuthSuccessResponse()
+            {
+                Token = authResponse.Token
+            });
+        }
     }
 }

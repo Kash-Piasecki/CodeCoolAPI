@@ -13,6 +13,7 @@ namespace CodeCoolAPI.Services
     public interface IIdentityService
     {
         Task<AuthenticationResult> Register(string email, string password);
+        Task<AuthenticationResult> Login(string email, string password);
     }
 
     class IdentityService : IIdentityService
@@ -29,7 +30,7 @@ namespace CodeCoolAPI.Services
         public async Task<AuthenticationResult> Register(string email, string password)
         {
             var existingUser = await _userManager.FindByEmailAsync(email);
-            if (existingUser != null)
+            if (existingUser is not null)
                 return new AuthenticationResult()
                 {
                     Errors = new[] {"User with this email address already exists"}
@@ -50,6 +51,26 @@ namespace CodeCoolAPI.Services
                 };
             }
 
+            return GenerateAuthenticationResult(newUser);
+        }
+
+        public async Task<AuthenticationResult> Login(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, password);
+            if (user is null || !userHasValidPassword)
+            {
+                return new AuthenticationResult()
+                {
+                    Errors = new[] {"Wrong credentials"}
+                };
+            }
+
+            return GenerateAuthenticationResult(user);
+        }
+        
+        private AuthenticationResult GenerateAuthenticationResult(IdentityUser newUser)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -74,5 +95,6 @@ namespace CodeCoolAPI.Services
                 Token = tokenHandler.WriteToken(token)
             };
         }
+
     }
 }
