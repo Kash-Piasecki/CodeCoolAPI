@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CodeCoolAPI.CustomExceptions;
@@ -16,13 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CodeCoolAPI.Services
 {
-    public interface IIdentityService
-    {
-        Task RegisterUser(RegisterUserDto registerUserDto);
-        Task RegisterAdmin(RegisterUserDto registerUserDto);
-        Task<string> Login(LoginUserDto loginUserDto);
-    }
-
     class IdentityService : IIdentityService
     {
         private readonly IUnitOfWork _unitOfWork;

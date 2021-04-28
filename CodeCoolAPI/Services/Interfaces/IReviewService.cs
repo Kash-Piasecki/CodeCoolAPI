@@ -8,8 +8,8 @@ namespace CodeCoolAPI.Services
     {
         Task<ReviewReadDto> ReadReviewById(int id);
         Task<IEnumerable<ReviewReadDto>> ReadAllReviews();
-        Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, string userId);
-        Task UpdateReview(int id, ReviewUpsertDto reviewUpsertDto);
+        Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, int userId);
+        Task UpdateReview(int id, ReviewUpsertDto reviewUpsertDto, int userId, string userRole);
         Task DeleteReview(int id);
     }
 }

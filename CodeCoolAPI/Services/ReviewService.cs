@@ -20,7 +20,7 @@ namespace CodeCoolAPI.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        
+
         public async Task<ReviewReadDto> ReadReviewById(int id)
         {
             var review = await FindReview(id);
@@ -38,30 +38,32 @@ namespace CodeCoolAPI.Services
             return reviewReadDtoList;
         }
 
-        public async Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, string id)
+        public async Task<ReviewReadDto> CreateReviewReadDto(ReviewUpsertDto reviewUpsertDto, int userId)
         {
             var review = _mapper.Map<Review>(reviewUpsertDto);
-            review.UserId = Convert.ToInt32(id);
+            review.UserId = userId;
             await _unitOfWork.Reviews.Create(review);
             await _unitOfWork.Save();
             return _mapper.Map<ReviewReadDto>(review);
         }
 
-        public async Task UpdateReview(int id, ReviewUpsertDto reviewUpsertDto)
+        public async Task UpdateReview(int id, ReviewUpsertDto reviewUpsertDto, int userId, string userRole)
         {
             var review = await FindReview(id);
+            if (review.UserId != userId && userRole != "Admin") 
+                throw new BadRequestException("Unauthorized Attempt");
             _mapper.Map(reviewUpsertDto, review);
             await _unitOfWork.Reviews.Update(review);
             await _unitOfWork.Save();
         }
 
-        public async  Task DeleteReview(int id)
+        public async Task DeleteReview(int id)
         {
-            var material = await FindReview(id);
-            await _unitOfWork.Reviews.Delete(material);
+            var review = await FindReview(id);
+            await _unitOfWork.Reviews.Delete(review);
             await _unitOfWork.Save();
         }
-        
+
         private async Task<Review> FindReview(int id)
         {
             var review = await _unitOfWork.Reviews.Find(id);
